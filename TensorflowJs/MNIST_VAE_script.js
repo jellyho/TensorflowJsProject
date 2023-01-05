@@ -19,6 +19,16 @@ latent_img.onload = function () //이미지 로딩 완료시 실행되는 함수
     context_ctx.drawImage(latent_img, 0, 0, 400, 400);
 }
 
+input = tf.tensor([[0, 0]]);
+            model.then(function (model) {
+                pred = model.predict(input);
+            });
+
+context_ctx.fillStyle = "black";
+context_ctx.beginPath();
+context_ctx.arc(200, 200, 5, 0, Math.PI * 2)
+context_ctx.fill();
+
 var latent_clicked = false;
 var latent_x = 0.5;
 var latent_y = 0.5;
