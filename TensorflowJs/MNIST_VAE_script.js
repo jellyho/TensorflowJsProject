@@ -1,4 +1,7 @@
 // JavaScript source code
+const handler = tfn.io.fileSystem('MNIST_VAE_DECODER/model.json');
+const model = tf.loadLayersModel(handler);
+
 context_canvas = document.getElementById("context");
 number_canvas = document.getElementById("number");
 context_pos_text = document.getElementById("latent_pos")
@@ -34,8 +37,13 @@ context_canvas.addEventListener('mousemove', function (e) {
         event_clientY = e.clientY;
 
         const rect = context_canvas.getBoundingClientRect();
+        context_ctx.drawImage(latent_img, 0, 0, 400, 400);
         latent_x = event_clientX - rect.left;
         latent_y = event_clientY - rect.top;
+        context_ctx.fillStyle = "black";
+        context_ctx.beginPath();
+        context_ctx.arc(latent_x, latent_y, 5, 0, Math.PI * 2)
+        context_ctx.fill();
         latent_y = 400 - latent_y;
         latent_x /= 400;
         latent_y /= 400;
