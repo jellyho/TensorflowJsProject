@@ -6,7 +6,7 @@ number_canvas = document.getElementById("number");
 context_pos_text = document.getElementById("latent_pos")
 context_ctx = context_canvas.getContext("2d");
 number_ctx = number_canvas.getContext("2d");
-
+number_ctx.imageSmoothingEnabled = false;
 
 number_ctx.fillStyle = "black";
 number_ctx.fillRect(0, 0, 400, 400);
