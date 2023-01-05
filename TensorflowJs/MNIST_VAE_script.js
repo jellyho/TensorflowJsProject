@@ -1,6 +1,5 @@
 // JavaScript source code
-const handler = tfn.io.fileSystem('MNIST_VAE_DECODER/model.json');
-const model = tf.loadLayersModel(handler);
+const model = tf.loadLayersModel("https://raw.githubusercontent.com/jellyho/TensorflowJs/master/TensorflowJs/MNIST_VAE_DECODER/model.json");
 
 context_canvas = document.getElementById("context");
 number_canvas = document.getElementById("number");
