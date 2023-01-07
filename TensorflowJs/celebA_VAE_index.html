@@ -1,0 +1,217 @@
+<!doctype Html>
+<html lang="ko">
+
+<head>
+    <title>celebA VAE Web Demo!</title>
+    <meta property="og:title" content="celebA VAE Web Demo">
+    <meta name="description" content="">
+    <meta property="og:description" content="">
+    <!-- Import TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <!-- Import tfjs-vis -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body class="">
+    <hr />
+    <div class="text-center">
+        <h1>celebA VAE Web Demo by jellyho</h1>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col mx-auto text-center">
+            <h5>Uploaded</h5>
+            <img id="upload" width="400" , height="400">
+            <form method="post" enctype="multipart/form-data">
+                <div class="button">
+                    <label for="chooseFile">
+                        Upload Your Face Image, 1:1 Ratio Recommended
+                    </label>
+                </div>
+                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+            </form>
+        </div>
+        <div class="col mx-auto text-center">
+            <h5>Constructed</h5>
+            <canvas id="constructed" width="400" , height="400"></canvas>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <h4 class="text-left">Add Additional Vectors</h4>
+            <hr />
+            <br />
+            <div class="col">
+                <label for="5_o_Clock_Shadow" class="form-label">5_o_Clock_Shadow</label>
+                <p id="vec_5_o_Clock_Shadow" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="5_o_Clock_Shadow">
+                <hr />
+                <label for="Arched_Eyebrows" class="form-label">Arched_Eyebrows</label>
+                <p id="vec_Arched_Eyebrows" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Arched_Eyebrows">
+                <hr />
+                <label for="Attractive" class="form-label">Attractive</label>
+                <p id="vec_Attractive"class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Attractive">
+                <hr />
+                <label for="Bags_Under_Eyes" class="form-label">Bags_Under_Eyes</label>
+                <p id="vec_Bags_Under_Eyes" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Bags_Under_Eyes">
+                <hr />
+                <label for="Bald" class="form-label">Bald</label>
+                <p id="vec_Bald" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Bald">
+                <hr />
+                <label for="Bangs" class="form-label">Bangs</label>
+                <p id="vec_Bangs" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Bangs">
+                <hr />
+                <label for="Big_Lips" class="form-label">Big_Lips</label>
+                <p id="vec_Big_Lips" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Big_Lips">
+                <hr />
+                <label for="Big_Nose" class="form-label">Big_Nose</label>
+                <p id="vec_Big_Nose" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Big_Nose">
+                <hr />
+                <label for="Black_Hair" class="form-label">Black_Hair</label>
+                <p id="vec_Black_Hair" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Black_Hair">
+                <hr />
+                <label for="Blond_Hair" class="form-label">Blond_Hair</label>
+                <p id="vec_Blond_Hair" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Blond_Hair">
+                <hr />
+                <label for="Blurry" class="form-label">Blurry</label>
+                <p id="vec_Blurry" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Blurry">
+                <hr />
+                <label for="Brown_Hair" class="form-label">Brown_Hair</label>
+                <p id="vec_Brown_Hair" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Brown_Hair">
+                <hr />
+                <label for="Bushy_Eyebrows" class="form-label">Bushy_Eyebrows</label>
+                <p id="vec_Bushy_Eyebrows" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Bushy_Eyebrows">
+                <hr />
+                <label for="Chubby" class="form-label">Chubby</label>
+                <p id="vec_Chubby" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Chubby">
+            </div>
+            <div class="col">
+                <label for="Gray_Hair" class="form-label">Gray_Hair</label>
+                <p id="vec_Gray_Hair" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Gray_Hair">
+                <hr />
+                <label for="Heavy_Makeup" class="form-label">Heavy_Makeup</label>
+                <p id="vec_Heavy_Makeup" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Heavy_Makeup">
+                <hr />
+                <label for="High_Cheekbone" class="form-label">High_Cheekbones</label>
+                <p id="vec_High_Cheekbone" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="High_Cheekbone">
+                <hr />
+                <label for="Male" class="form-label">Male</label>
+                <p id="vec_Male" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Male">
+                <hr />
+                <label for="Mouth_Slightly_Open" class="form-label">Mouth_Slightly_Open</label>
+                <p id="vec_Mouth_Slightly_Open" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Mouth_Slightly_Open">
+                <hr />
+                <label for="Mustache" class="form-label">Mustache</label>
+                <p id="vec_Mustache" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Mustache">
+                <hr />
+                <label for="Narrow_Eyes" class="form-label">Narrow_Eyes</label>
+                <p id="vec_Narrow_Eyes" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Narrow_Eyes">
+                <hr />
+                <label for="No_Beard" class="form-label">No_Beard</label>
+                <p id="vec_No_Beard" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="No_Beard">
+                <hr />
+                <label for="Oval_Face" class="form-label">Oval_Face</label>
+                <p id="vec_Oval_Face" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Oval_Face">
+                <hr />
+                <label for="Pale_Skin" class="form-label">Pale_Skin</label>
+                <p id="vec_Pale_Skin" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Pale_Skin">
+                <hr />
+                <label for="Pointy_Nose" class="form-label">Pointy_Nose</label>
+                <p id="vec_Pointy_Nose" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Pointy_Nose">
+                <hr />
+                <label for="Receding_Hairline" class="form-label">Receding_Hairline</label>
+                <p id="vec_Receding_Hairline" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Receding_Hairline">
+                <hr />
+                <label for="Rosy_Cheeks" class="form-label">Rosy_Cheeks</label>
+                <p id="vec_Rosy_Cheeks" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Rosy_Cheeks">
+                <hr />
+            </div>
+            <div class="col">
+                <label for="Double_Chin" class="form-label">Double_Chin</label>
+                <p id="vec_Double_Chin" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Double_Chin">
+                <hr />
+                <label for="Eyeglasses" class="form-label">Eyeglasses</label>
+                <p id="vec_Eyeglasses" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Eyeglasses">
+                <hr />
+                <label for="Goatee" class="form-label">Goatee</label>
+                <p id="vec_Goatee" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Goatee">
+                <hr />
+                <label for="Smiling" class="form-label">Smiling</label>
+                <p id="vec_Smiling" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Smiling">
+                <hr />
+                <label for="Straight_Hair" class="form-label">Straight_Hair</label>
+                <p id="vec_Straight_Hair" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Straight_Hair">
+                <hr />
+                <label for="Wavy_Hair" class="form-label">Wavy_Hair</label>
+                <p id="vec_Wavy_Hair" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Wavy_Hair">
+                <hr />
+                <label for="Wearing_Earrings" class="form-label">Wearing_Earrings</label>
+                <p id="vec_Wearing_Earrings" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Wearing_Earrings">
+                <hr />
+                <label for="Wearing_Hat" class="form-label">Wearing_Hat</label>
+                <p id="vec_Wearing_Hat" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Wearing_Hat">
+                <hr />
+                <label for="Wearing_Lipstick" class="form-label">Wearing_Lipstick</label>
+                <p id="vec_Wearing_Lipstick" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Wearing_Lipstick">
+                <hr />
+                <label for="Wearing_Necklace" class="form-label">Wearing_Necklace</label>
+                <p id="vec_Wearing_Necklace" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Wearing_Necklace">
+                <hr />
+                <label for="Wearing_Necktie" class="form-label">Wearing_Necktie</label>
+                <p id="vec_Wearing_Necktie" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Wearing_Necktie">
+                <hr />
+                <label for="Young" class="form-label">Young</label>
+                <p id="vec_Young" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Young">
+                <hr />
+                <label for="Sideburns" class="form-label">Sideburns</label>
+                <p id="vec_Sideburns" class="text-center">0.0</p>
+                <input type="range" class="form-range" id="Sideburns">
+                <hr />
+            </div>
+            <hr />
+        </div>
+    </div>
+    <script src="celebA_VAE_script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+
+</html>
