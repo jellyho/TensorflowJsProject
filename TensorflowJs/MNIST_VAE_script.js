@@ -6,7 +6,7 @@ number_canvas = document.getElementById("number");
 context_pos_text = document.getElementById("latent_pos")
 context_ctx = context_canvas.getContext("2d");
 number_ctx = number_canvas.getContext("2d");
-
+number_ctx.imageSmoothingEnabled = false;
 
 number_ctx.fillStyle = "black";
 number_ctx.fillRect(0, 0, 400, 400);
@@ -18,6 +18,16 @@ latent_img.onload = function () //이미지 로딩 완료시 실행되는 함수
 {
     context_ctx.drawImage(latent_img, 0, 0, 400, 400);
 }
+
+input = tf.tensor([[0, 0]]);
+            model.then(function (model) {
+                pred = model.predict(input);
+            });
+
+context_ctx.fillStyle = "black";
+context_ctx.beginPath();
+context_ctx.arc(200, 200, 5, 0, Math.PI * 2)
+context_ctx.fill();
 
 var latent_clicked = false;
 var latent_x = 0.5;
