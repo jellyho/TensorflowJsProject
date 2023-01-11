@@ -1,6 +1,8 @@
 // JavaScript source code
 console.log('hello tf')
 
+import data from './trait_vectors.json' assert {type : 'JSON'};
+console.log(data);
 /**
  * Get the car data reduced to just the variables we are interested
  * and cleaned of missing data.
