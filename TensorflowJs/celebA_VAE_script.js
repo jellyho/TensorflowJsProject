@@ -33,6 +33,4 @@ function resetTraits() {
 }
 
 resetTraits();
-fetch('./data.json')
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+fetch('trait_vectors.json').then((response) => response.json()).then((json) => console.log(json));
