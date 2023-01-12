@@ -1,5 +1,8 @@
 img = document.getElementById('upload');
 
+const encoder = tf.loadGraphModel("https://raw.githubusercontent.com/jellyho/TensorflowJs/master/TensorflowJs/MNIST_VAE_DECODER/model.json");
+const decoder = tf.loadGraphModel("https://raw.githubusercontent.com/jellyho/TensorflowJs/master/TensorflowJs/MNIST_VAE_DECODER/model.json");
+
 function loadFile(input) {
     var file = input.files[0];	//선택된 파일 가져오기
 
