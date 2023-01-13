@@ -12,9 +12,10 @@ traits = ['5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive', 'Bags_Under_Eyes'
     , 'Mouth_Slightly_Open', 'Mustache', 'Narrow_Eyes', 'No_Beard', 'Oval_Face', 'Pale_Skin', 'Pointy_Nose', 'Receding_Hairline', 'Rosy_Cheeks', 'Sideburns'
     ,'Smiling','Straight_Hair','Wavy_Hair','Wearing_Earrings','Wearing_Hat','Wearing_Lipstick','Wearing_Necklace','Wearing_Necktie','Young']
 
-train_values = {}
-sliders = {}
-slider_ps = {}
+var train_values = {}
+var sliders = {}
+var slider_ps = {}
+var trait_vectors;
 
 function resetTraits() {
     for (let i = 0; i < traits.length; i++) {
@@ -33,4 +34,4 @@ function resetTraits() {
 }
 
 resetTraits();
-fetch('trait_vectors.json').then((response) => response.json()).then((json) => console.log(json));
+fetch('trait_vectors.json').then((response) => response.json()).then((json) => trait_vectors = json);
