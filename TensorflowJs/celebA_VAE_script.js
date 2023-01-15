@@ -24,6 +24,7 @@ function setExampleImage(obj) {
     console.log('image loaded');
     img.src = obj.src;
     console.log(img.src);
+    resetBars();
     setTimeout(function () { encode(); }, 1000);
     setTimeout(function () { decode(); }, 2000);
 }
@@ -36,6 +37,13 @@ traits = ['5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive', 'Bags_Under_Eyes'
 train_values = {}
 sliders = {}
 slider_ps = {}
+
+function resetBars() {
+    for (let i = 0; i < traits.length; i++) {
+        train_values[traits[i]] = 0;
+        slider_ps[traits[i]].innerText = 0;
+    }
+}
 
 function resetTraits() {
     for (let i = 0; i < traits.length; i++) {
