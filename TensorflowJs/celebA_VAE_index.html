@@ -20,28 +20,87 @@
     <hr />
     <div class="row">
         <div class="col mx-auto text-center">
-            <h5>Uploaded</h5>
-            <img id="upload" width="128px" , height="128px">
+            <h5>Upload the BaseLine Image</h5>
+            <img id="upload" width="250px" , height="250px">
             <form method="post" enctype="multipart/form-data">
                 <div class="button">
                     <label for="chooseFile">
-                        Upload Your Face Image, 1:1 Ratio Recommended
+                        Upload Face Image, 1:1 Ratio Recommended
                     </label>
                 </div>
                 <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
             </form>
         </div>
+        <div class="col text-center align-middle">
+            <div class="progress my-5" role="progressbar" style="height: 30%" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                <div id="state" class="progress-bar bg-success" style="width: 0%"></div>
+            </div>
+        </div>
         <div class="col mx-auto text-center">
             <h5>Constructed</h5>
-            <canvas id="constructed" width="128" , height="128" style="width:128px; height:128px;"></canvas>
+            <canvas id="constructed" width="128" , height="128" style="width:250px; height:250px;"></canvas>
         </div>
     </div>
     <hr />
     <div class="container">
-        <div class="row">
-            <h4 class="text-left">Add Additional Vectors</h4>
-            <hr />
-            <br />
+        <h4 class="text-left">Use Example Image as BaseLine</h4>
+        <hr />
+        <div class="row" style="overflow:scroll; height:150px;">
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+            <div class="col">
+                <img onclick="setExampleImage(this);" width="128px" , height="128px">
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="container" ">
+        <h4 class="text-left">Add Additional Vectors</h4>
+        <hr />
+        <div class="row" style="overflow:scroll; height:280px;">
             <div class="col">
                 <label for="5_o_Clock_Shadow" class="form-label">5_o_Clock_Shadow</label>
                 <p id="vec_5_o_Clock_Shadow" class="text-center">0.0</p>
@@ -52,7 +111,7 @@
                 <input type="range" class="form-range" id="Arched_Eyebrows">
                 <hr />
                 <label for="Attractive" class="form-label">Attrctive</label>
-                <p id="vec_Attractive"class="text-center">0.0</p>
+                <p id="vec_Attractive" class="text-center">0.0</p>
                 <input type="range" class="form-range" id="Attractive">
                 <hr />
                 <label for="Bags_Under_Eyes" class="form-label">Bags_Under_Eyes</label>
