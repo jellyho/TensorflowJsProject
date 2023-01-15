@@ -14,6 +14,7 @@ function loadFile(input) {
 
     //이미지 source 가져오기
     img.src = URL.createObjectURL(file);
+    console.log(img.src);
     console.log('image loaded');
     setTimeout(function () { encode();}, 1000);
     setTimeout(function () { decode();}, 2000);
@@ -22,6 +23,7 @@ function loadFile(input) {
 function setExampleImage(obj) {
     console.log('image loaded');
     img.src = obj.src;
+    console.log(img.src);
     setTimeout(function () { encode(); }, 1000);
     setTimeout(function () { decode(); }, 2000);
 }
