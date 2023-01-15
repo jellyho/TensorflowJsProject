@@ -4,8 +4,9 @@ canvas = document.getElementById("constructed");
 const encoder = tf.loadGraphModel("https://raw.githubusercontent.com/jellyho/TensorflowJsProject.github.io/master/TensorflowJs/celebA_VAE_encoder/model.json");
 const decoder = tf.loadGraphModel("https://raw.githubusercontent.com/jellyho/TensorflowJsProject.github.io/master/TensorflowJs/celebA_VAE_decoder/model.json");
 
-var latent;
+var latent = tf.zeros([1, 400]);
 var constructed;
+var trait_vectors;
 
 function loadFile(input) {
     var file = input.files[0];	//선택된 파일 가져오기
@@ -19,7 +20,7 @@ function loadFile(input) {
 traits = ['5_o_Clock_Shadow', 'Arched_Eyebrows', 'Attractive', 'Bags_Under_Eyes', 'Bald', 'Bangs', 'Big_Lips', 'Big_Nose', 'Black_Hair', 'Blond_Hair'
     , 'Blurry', 'Brown_Hair', 'Bushy_Eyebrows', 'Chubby', 'Double_Chin', 'Eyeglasses', 'Goatee', 'Gray_Hair', 'Heavy_Makeup', 'High_Cheekbones', 'Male'
     , 'Mouth_Slightly_Open', 'Mustache', 'Narrow_Eyes', 'No_Beard', 'Oval_Face', 'Pale_Skin', 'Pointy_Nose', 'Receding_Hairline', 'Rosy_Cheeks', 'Sideburns'
-    ,'Smiling','Straight_Hair','Wavy_Hair','Wearing_Earrings','Wearing_Hat','Wearing_Lipstick','Wearing_Necklace','Wearing_Necktie','Young']
+    , 'Smiling', 'Straight_Hair', 'Wavy_Hair', 'Wearing_Earrings', 'Wearing_Hat', 'Wearing_Lipstick', 'Wearing_Necklace', 'Wearing_Necktie', 'Young'];
 
 train_values = {}
 sliders = {}
@@ -36,13 +37,26 @@ function resetTraits() {
             var value = (event.target.value - 50) / 10;
             slider_ps[event.target.id].innerText = value;
             train_values[event.target.id] = value;
+            update_traits();
         });
     }
     return true;
 }
 
 resetTraits();
-fetch('https://raw.githubusercontent.com/jellyho/TensorflowJsProject.github.io/master/TensorflowJs/trait_vectors.json').then((response) => response.json()).then((json) => console.log(json));
+fetch('https://raw.githubusercontent.com/jellyho/TensorflowJsProject.github.io/master/TensorflowJs/trait_vectors.json').then((response) => response.json()).then((json) => trait_vectors=json);
+
+function update_traits() {
+    var new_latent = tf.clone(latent[0]);
+    for (let i = 0; i < traits.length; i++) {
+        var trait = tf.tensor(trait_vectors[traits[i]]);
+        trait = trait.mul(train_values[traits[i]]);
+        trait = tf.reshape(trait, [1, 400]);      
+        new_latent = new_latent.add(trait);
+    }
+    console.log(new_latent.print());
+    decode_new(new_latent);
+}
 
 function encode()
 {
@@ -57,6 +71,13 @@ function decode()
 {
     var input = tf.reshape(latent[0], [1, 400]);
     decoder.then(function (decoder) {constructed = decoder.predict(input);});
+    constructed = tf.reshape(constructed, [128, 128, 3]);
+    tf.browser.toPixels(constructed, canvas);
+}
+
+function decode_new(latent) {
+    var input = tf.reshape(latent, [1, 400]);
+    decoder.then(function (decoder) { constructed = decoder.predict(input); });
     constructed = tf.reshape(constructed, [128, 128, 3]);
     tf.browser.toPixels(constructed, canvas);
 }
