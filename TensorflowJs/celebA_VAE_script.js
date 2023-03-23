@@ -10,9 +10,9 @@ var constructed;
 var trait_vectors;
 
 function loadFile(input) {
-    var file = input.files[0];	//¼±ÅÃµÈ ÆÄÀÏ °¡Á®¿À±â
+    var file = input.files[0];	//ì„ íƒëœ íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
 
-    //ÀÌ¹ÌÁö source °¡Á®¿À±â
+    //ì´ë¯¸ì§€ source ê°€ì ¸ì˜¤ê¸°
     img.src = URL.createObjectURL(file);
     console.log(img.src);
     console.log('image loaded');
@@ -98,6 +98,7 @@ function decode() {
         constructed = decoder.predict(tf.reshape(input, [1, 400]));
         constructed = tf.reshape(constructed, [128, 128, 3]);
         tf.browser.toPixels(constructed, canvas);
+        tf.dispose(constructed);
     });
     state.innerText = "decoded";
     state.style = "width : 100%";
@@ -108,6 +109,7 @@ function decode_new(latent) {
     decoder.then(function (decoder) { constructed = decoder.predict(input); });
     constructed = tf.reshape(constructed, [128, 128, 3]);
     tf.browser.toPixels(constructed, canvas);
+    tf.dispose(constructed);
 }
 
 resetTraits();
